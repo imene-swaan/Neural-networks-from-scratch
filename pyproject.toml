@@ -7,7 +7,7 @@ readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.11"
-torch = "^2.1.0"
+torch = ">=2.0.0, !=2.0.1, !=2.1.0"
 mkdocs-material = {version = "^9.4.7", extras = ["imaging"]}
 mkdocs = "^1.5.3"
 mkdocstrings = "^0.23.0"
