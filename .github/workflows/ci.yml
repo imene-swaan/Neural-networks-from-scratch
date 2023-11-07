@@ -1,0 +1,42 @@
+name: Continuous Integration and Deployment
+
+on:
+  push:
+    branches:
+      - main  # Replace with your default branch
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    # Setup Python environment
+    - name: Set up Python
+      uses: actions/setup-python@v3
+      with:
+        python-version: '3.10' # Specify the Python version you need for your project
+
+    # Cache Poetry installed dependencies
+    - name: Cache Poetry virtualenv
+      uses: actions/cache@v3
+      with:
+        path: ~/.cache/pypoetry/virtualenvs
+        key: ${{ runner.os }}-poetry-${{ hashFiles('**/poetry.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-poetry-
+
+    # Install dependencies using Poetry
+    - name: Install dependencies
+      run: |
+        pip install poetry
+        poetry install --no-dev
+
+    - name: Run tests
+      run: |
+        poetry run python -m unittest discover -s tests
+      shell: bash
