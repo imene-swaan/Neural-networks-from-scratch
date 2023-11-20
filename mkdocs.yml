@@ -1,0 +1,87 @@
+site_name: Networks
+site_name: Semantic Shift Detection
+theme:
+  name: material
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - toc.integrate
+    - navigation.top
+    - search.suggest
+    - search.highlight
+    - search
+    - content.tabs.link
+    - content.code.annotation
+    - content.code.copy
+    - content.code.tabbed
+    - content.image.figure
+    - content.image.lightbox
+    - content.image.zoom
+    - content.video
+    - content.iframe
+    - content.math
+  language: en
+  palette:
+    - scheme: default
+      toggle:
+        icon: material/toggle-switch-off-outline 
+        name: Switch to dark mode
+      primary: lime
+      accent: purple 
+    - scheme: slate 
+      toggle:
+        icon: material/toggle-switch
+        name: Switch to light mode    
+      primary: purple-grey
+      accent: lime
+
+plugins:
+  - social
+  - mkdocstrings
+  - autorefs
+  - search:
+      lang: en
+  - bibtex:
+      bib_file: docs/concepts/references.bib
+      
+
+
+nav:
+- Get Started:
+  - Welcome to Networks: index.md
+- Concepts:
+  - Linear: Linear/ff.md
+- Documentation:
+  - Linear: 
+    - Feed Forward: Linear/ff.md
+  
+  - Extra:
+    - tests: tests.md
+
+
+
+
+extra:
+  social:
+    - icon: fontawesome/brands/github-alt
+      link: https://github.com/imene-swaan
+    - icon: fontawesome/brands/linkedin
+      link: https://www.linkedin.com/in/imenekolli/
+
+markdown_extensions:
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - admonition
+  - pymdownx.arithmatex:
+      generic: true
+  - footnotes
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.mark
+  - attr_list
+
+copyright: |
+  &copy; 2023 <a href="https://www.linkedin.com/in/imenekolli/"  target="_blank" rel="noopener">Imene Kolli</a>
+
