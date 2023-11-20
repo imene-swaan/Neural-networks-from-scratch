@@ -7,14 +7,6 @@ from torch import Tensor
 class Linear:
     """
     A linear layer in a neural network.
-
-    Methods:
-        __init__(self, in_features: int, out_features: int)
-            Initialize the weight matrix and bias vector.
-        _init_glorot(self, in_features: int, out_features: int) -> Tensor
-            Init a weight matrix with glorot initialization. Static method.
-        forward(self, x: Tensor) -> Tensor
-            Compute the forward pass.
     """
     def __init__(self, in_features: int, out_features: int):
         self.weight = self._init_glorot(in_features, out_features)
@@ -33,7 +25,7 @@ class Linear:
             out_features (int): Number of output features.
 
         Returns:
-            (Tensor): A weight matrix with glorot initialization.
+            weight_matrix (Tensor): A weight matrix with glorot initialization.
         """
         b = torch.sqrt(torch.tensor([6. / (in_features + out_features)]))
         return (2 * b) * torch.rand(in_features, out_features) - b
@@ -46,21 +38,13 @@ class Linear:
             x (Tensor): Input tensor.
 
         Returns:
-            (Tensor): Output tensor.
+            output (Tensor): Output tensor.
         """
         return x @ self.weight + self.bias
 
 class Sigmoid:
     """
-    A sigmoid activation function.
-    
-    Methods:
-        __init__(self)
-            Initialize the sigmoid function.
-        forward(self, x: Tensor) -> Tensor
-            Compute the forward pass.
-        get_gradient(self, x: Tensor) -> Tensor
-            Compute the gradient of the sigmoid function.     
+    A sigmoid activation function.  
     """
     def __init__(self):
         self.func = lambda x: 1 / (1 + torch.exp(-x))
@@ -73,7 +57,7 @@ class Sigmoid:
             x (Tensor): Input tensor.
             
         Returns:
-            (Tensor): Output tensor.
+            output (Tensor): Output tensor.
         """
         return self.func(x)
 
@@ -85,7 +69,7 @@ class Sigmoid:
             x (Tensor): Input tensor.
 
         Returns:
-            (Tensor): Gradient tensor.
+            gradient (Tensor): Gradient tensor.
         """
         return self.func(x) * (1 - self.func(x))
 
@@ -93,14 +77,6 @@ class Sigmoid:
 class TanH:
     """
     A tanh activation function.
-    
-    Methods:
-        __init__(self)
-            Initialize the tanh function.
-        forward(self, x: Tensor) -> Tensor
-            Compute the forward pass.
-        get_gradient(self, x: Tensor) -> Tensor
-            Compute the gradient of the tanh function.
     """
     @staticmethod
     def forward(x: Tensor) -> Tensor:
@@ -111,7 +87,7 @@ class TanH:
             x (Tensor): Input tensor.
             
         Returns:
-            (Tensor): Output tensor.
+            output (Tensor): Output tensor.
         """
         return torch.tanh(x)
 
@@ -124,21 +100,13 @@ class TanH:
             x (Tensor): Input tensor.
 
         Returns:
-            (Tensor): Gradient tensor.
+            gradient (Tensor): Gradient tensor.
         """
         return  1 - torch.tanh(x)**2
 
 class MSELoss:
     """
     A mean squared error loss function.
-
-    Methods:
-        __init__(self)
-            Initialize the loss function.
-        forward(self, y_true: Tensor, y_pred: Tensor) -> Tensor
-            Compute the forward pass.
-        get_gradient(self, y_true: Tensor, y_pred: Tensor) -> Tensor
-            Compute the gradient of the loss function.
     """
     @staticmethod
     def forward(y_true: Tensor, y_pred: Tensor) -> Tensor:
@@ -150,7 +118,7 @@ class MSELoss:
             y_pred (Tensor): Predicted labels.
         
         Returns:
-            (Tensor): Output tensor.
+            output (Tensor): Output tensor.
         """
         return torch.mean((y_true - y_pred)**2)
 
@@ -164,7 +132,7 @@ class MSELoss:
             y_pred (Tensor): Predicted labels.
 
         Returns:
-            (Tensor): Gradient tensor.
+            gradient (Tensor): Gradient tensor.
         """
         return 2 * (y_pred - y_true) / len(y_true)
 
@@ -173,20 +141,6 @@ class MSELoss:
 class NeuralLayer:
     """
     A neural layer in a neural network.
-
-    Methods:
-        __init__(self, in_features: int, out_features: int, activation: str)
-            Initialize the linear layer and activation function.
-        forward(self, x: Tensor) -> Tensor
-            Compute the forward pass.
-        get_weight(self) -> Tensor
-            Get the weight matrix in the linear layer.
-        get_bias(self) -> Tensor
-            Get the weight matrix in the linear layer.
-        set_weight_gradient(self, grad: Tensor) -> None
-            Set a tensor as gradient for the weight in the linear layer.
-        set_bias_gradient(self, grad: Tensor) -> None
-            Set a tensor as gradient for the bias in the linear layer.
     """
     def __init__(self, in_features: int, out_features: int, activation: str):
         """
@@ -219,7 +173,7 @@ class NeuralLayer:
             x (Tensor): Input tensor.
 
         Returns:
-            (Tensor): Output tensor.
+            output (Tensor): Output tensor.
         """
         self.last_input = x
         self.last_zin = self.linear.forward(x)
@@ -231,7 +185,7 @@ class NeuralLayer:
         Get the weight matrix in the linear layer.
 
         Returns:
-            (Tensor): Weight matrix.
+            weight_matrix (Tensor): Weight matrix.
         """
         return self.linear.weight
 
@@ -240,7 +194,7 @@ class NeuralLayer:
         Get the bias in the linear layer.
         
         Returns:
-            (Tensor): Bias.
+            bias (Tensor): Bias.
         """
         return self.linear.bias
 
@@ -265,23 +219,7 @@ class NeuralLayer:
 
 class NeuralNetwork:
     """
-    A neural network.
-
-    Methods:
-        __init__(self, input_size: int, output_size: int, hidden_sizes: List[int])
-            Initialize the neural network.
-        forward(self, x: Tensor) -> Tensor
-            Compute the forward pass.
-        get_loss(self, x: Tensor, y: Tensor) -> Tensor
-            Compute the loss for a dataset and given labels.
-        backward(self, x: Tensor, y: Tensor) -> None
-            Compute the backward pass.
-        apply_gradients(self, learning_rate: float) -> None
-            Update weights with the computed gradients.
-        train(self, x: Tensor, y: Tensor, learning_rate: float) -> None
-            Train the neural network on a dataset.
-        predict(self, x: Tensor) -> Tensor
-            Predict the output for a dataset.
+    A linear feedforward neural network.
     """
     def __init__(self, input_size, output_size, hidden_sizes: List[int]):
         """
@@ -312,7 +250,7 @@ class NeuralNetwork:
             x (Tensor): Input tensor.
         
         Returns:
-            (Tensor): Output tensor.
+            output (Tensor): Output tensor.
         """
         for layer in self.layers:
             x = layer.forward(x)
@@ -327,7 +265,7 @@ class NeuralNetwork:
             y (Tensor): Labels.
             
         Returns:
-            (Tensor): Loss tensor.
+            loss (Tensor): Loss tensor.
         """
         return self.loss.forward(self.forward(x), y)
 
@@ -356,7 +294,12 @@ class NeuralNetwork:
 
 
     def apply_gradients(self, learning_rate: float) -> None:
-        """Update weights with the computed gradients."""
+        """
+        Update weights with the computed gradients.
+        
+        Args:
+            learning_rate (float): Learning rate.
+        """
         for layer in self.layers:
             layer.linear.weight -= learning_rate * layer.linear.weight_grad
             layer.linear.bias -= learning_rate * layer.linear.bias_grad
