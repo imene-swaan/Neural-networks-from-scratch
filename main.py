@@ -1,10 +1,10 @@
 
 
 def main():
-    from networks.nn.nn import NeuralNetwork
+    from networks.Linear.feed_forward import NeuralNetwork
 
     # Create a neural network
-    nn = NeuralNetwork()
+    ff = NeuralNetwork()
 
 
 if __name__ == '__main__':

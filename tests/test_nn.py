@@ -1,6 +1,6 @@
 import unittest
 from torch import tensor
-from networks.nn.nn import Linear, Sigmoid, TanH, MSELoss, NeuralLayer, NeuralNetwork
+from networks.Linear.feed_forward import Linear, Sigmoid, TanH, MSELoss, NeuralLayer, NeuralNetwork
 
 class TestNeuralNetwork(unittest.TestCase):
     def setUp(self):
