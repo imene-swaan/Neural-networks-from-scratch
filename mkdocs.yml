@@ -1,5 +1,4 @@
-site_name: Networks
-site_name: Semantic Shift Detection
+site_name: Neural Networks from Scratch
 theme:
   name: material
   features:
@@ -22,13 +21,13 @@ theme:
     - content.math
   language: en
   palette:
-    - scheme: default
+    - scheme: slate
       toggle:
         icon: material/toggle-switch-off-outline 
         name: Switch to dark mode
       primary: lime
       accent: purple 
-    - scheme: slate 
+    - scheme: default 
       toggle:
         icon: material/toggle-switch
         name: Switch to light mode    
@@ -41,8 +40,6 @@ plugins:
   - autorefs
   - search:
       lang: en
-  - bibtex:
-      bib_file: docs/concepts/references.bib
       
 
 
@@ -50,10 +47,10 @@ nav:
 - Get Started:
   - Welcome to Networks: index.md
 - Concepts:
-  - Linear: Linear/ff.md
+  - Linear: concepts/ff.md
 - Documentation:
   - Linear: 
-    - Feed Forward: Linear/ff.md
+    - Feed Forward: doc/linear.md
   
   - Extra:
     - tests: tests.md
